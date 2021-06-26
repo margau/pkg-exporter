@@ -14,6 +14,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Set up Python
         run: |
+          apt-get update
           apt-get install -y python3 python3-apt python3-pip
       - uses: actions/cache@v2
         with:
