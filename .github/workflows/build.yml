@@ -1,0 +1,35 @@
+---
+name: PyInstaller Build
+on:
+  - push
+  - pull_request
+jobs:
+  flake:
+    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
+    name: pyinstaller-deb
+    runs-on: ubuntu-latest
+    container:
+      image: debian:buster
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        run: |
+          apt-get update
+          apt-get install -y python3 python3-apt python3-pip
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Install Dependencies
+        run: |
+          pip3 install -r requirements.txt
+      - name: Build with pyinstaller
+        run: ./scripts/build.py
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: pkg-exporter-buster
+          path: |
+            dist/pkg-exporter
