@@ -24,12 +24,12 @@ for k, v in origins.items():
     # only initialze in the first iteration
     if g_inst is None:
         g_inst = Gauge(
-            'pkg_installed', 'Description of gauge',
+            'pkg_installed', 'Installed Packages from this package origin',
             label_names, registry=registry
             )
     if g_upgr is None:
         g_upgr = Gauge(
-            'pkg_upgradable', 'Upgradable Packages in this Package Origin',
+            'pkg_upgradable', 'Upgradable packages in this package origin',
             label_names, registry=registry
             )
 
