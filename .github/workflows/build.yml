@@ -24,8 +24,7 @@ jobs:
             ${{ runner.os }}-pip-
       - name: Install Dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip3 install -r requirements.txt
       - name: Build with pyinstaller
         run: ./scripts/build.py
       - name: Archive build artifacts
