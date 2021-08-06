@@ -1,17 +1,21 @@
 ---
-name: PyInstaller Build
+name: PyInstaller Release
+
 on:
-  - push
-  - pull_request
+  push:
+    tags:
+      - "v*.*.*"
+
 jobs:
-  build:
-    if: github.event_name == 'push' || github.event.pull_request.head.repo.full_name != github.repository
+  release:
     name: pyinstaller-bin
     runs-on: ubuntu-latest
     container:
       image: debian:buster
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@
+      - name: Set up Git Tag Env
+        run: echo "GIT_TAG=`echo $(git describe --tags --abbrev=0)`" >> $GITHUB_ENV
       - name: Set up Python
         run: |
           apt-get update
@@ -27,9 +31,10 @@ jobs:
           pip3 install -r requirements.txt
       - name: Build with pyinstaller
         run: ./scripts/build.py
-      - name: Archive build artifacts
-        uses: actions/upload-artifact@v2
+      - name: Rename binary
+        run: mv dist/pkg-exporter dist/pkg-exporter-buster-${GIT_TAG}
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
-          name: pkg-exporter-buster
-          path: |
-            dist/pkg-exporter
+          files: dist/pkg-exporter-buster-${GIT_TAG}
