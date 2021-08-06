@@ -13,7 +13,7 @@ jobs:
     container:
       image: debian:buster
     steps:
-      - uses: actions/checkout@
+      - uses: actions/checkout@v2
       - name: Set up Git Tag Env
         run: echo "GIT_TAG=`echo $(git describe --tags --abbrev=0)`" >> $GITHUB_ENV
       - name: Set up Python
