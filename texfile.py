@@ -36,5 +36,8 @@ for k, v in origins.items():
     g_inst.labels(*label_values).set(v["installed"])
     g_upgr.labels(*label_values).set(v["upgradable"])
 
-write_to_textfile(os.getenv("PKG_EXPORTER_FILE",
-                            "/var/prometheus/pkg-exporter.prom"), registry)
+exporter_file = os.getenv("PKG_EXPORTER_FILE", "/var/prometheus/pkg-exporter.prom")
+exporter_dir = os.path.dirname(exporter_file)
+os.makedirs(exporter_dir, exist_ok=True)
+
+write_to_textfile(exporter_file, registry)
