@@ -24,15 +24,23 @@ Feel free to contribute improvements, as well as support for non-apt based syste
 
 ## Installation
 
-The easiest installation method is downloading the prebuilt binary from the relase. 
+The easiest installation method is downloading the prebuilt binary from the github relase site. 
 
 Alternatively, the scripts and requirements in the repositoriy may be installed manually.
 
+### apt-based systems
+
+Currently, only apt-based systems are supported.
+
 ## Configuration and Usage
 
-The node exporter needs to be configured for textfiles using the `--collector.textfile.directory` option. This exporter needs to write into this directory. The default path is `/var/prometheus/pkg-exporter.prom`, and may be changed via the `PKG_EXPORTER_FILE`-Environment Variable.
+The node exporter needs to be configured for textfiles using the `--collector.textfile.directory` option. This exporter needs to write the exported metrics into this directory. 
+
+The default path is `/var/prometheus/pkg-exporter.prom`, and may be changed via the `PKG_EXPORTER_FILE`-Environment Variable.
+If the directory is not already present, it will be created by the exporter.
 
 The script `texfile.py` or the binary shall be executed in a appropriate interval, e.g. using cron or systemd timers.
+The exporter needs to be executed with appropriate privileges, which are not necessarily root privileges.
 
 An example configuration will be provided in this repository in the future.
 
