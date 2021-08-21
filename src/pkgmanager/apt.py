@@ -1,41 +1,68 @@
 import apt
 import apt.progress
 
-upgradable_dict = {}
-
-cache = apt.Cache()
-cache.open(None)
-
 
 class AptPkgManager:
-    def labelDict(self, origin):
-        lDict = {}
-        lDict["archive"] = origin.archive
-        lDict["component"] = origin.component
-        lDict["label"] = origin.label
-        lDict["origin"] = origin.origin
-        lDict["site"] = origin.site
-        lDict["trusted"] = origin.trusted
-        return lDict
-    
-    
+    def __init__(self):
+        self.metricDict = {}
+        self.metricDict["installed"] = {"description": "Installed packages \
+                                        per origin"}
+        self.metricDict["upgradable"] = {"description": "Upgradable packages \
+                                         per origin"}
+        self.metricDict["auto_removable"] = {"description": "Auto-removable \
+                                             packages per origin"}
+        self.metricDict["broken"] = {"description": "Broken packages per \
+                                     origin"}
+        self.metricsByOrigin = {}
+        self.cache = apt.Cache()
+        self.cache.open(None)
 
-    def getOrigins(self):
-        for package_name in cache.keys():
-            selected_package = cache[package_name]
+    def labelValues(self, origin):
+        labelValues = [origin.archive, origin.component, origin.label,
+                       origin.origin, origin.site, origin.trusted]
+        return labelValues
+
+    def getMetricDict(self):
+        return self.metricDict
+
+    def getLabelNames(self):
+        labelNames = ["archive", "component", "label", "origin",
+                      "site", "trusted"]
+        return labelNames
+
+    def query(self):
+        for package_name in self.cache.keys():
+            selected_package = self.cache[package_name]
             if not selected_package.is_installed:
                 continue
-            # insert information into upgradable_dict
-            # informations are stored "per origin"
-            # we use the labels string representation as keys
             origin = selected_package.candidate.origins[0]
             key = str(origin)
-            # inside the first iteration, we setup the origin entry
-            if key not in upgradable_dict:
-                upgradable_dict[key] = {"upgradable": 0, "installed": 0}
-                upgradable_dict[key]["labels"] = self.labelDict(origin)
-            # increment appropriate counters
-            upgradable_dict[key]["installed"] += 1
+            if key not in self.metricsByOrigin:
+                self.metricsByOrigin[key] = {}
+                for k, _ in self.metricDict.items():
+                    self.metricsByOrigin[key][k] = 0
+
+                self.metricsByOrigin[key]["label_values"] = \
+                    self.labelValues(origin)
+
+            # Count Packages for the metrics
+            if selected_package.is_installed:
+                self.metricsByOrigin[key]["installed"] += 1
             if selected_package.is_upgradable:
-                upgradable_dict[key]["upgradable"] += 1
-        return upgradable_dict
+                self.metricsByOrigin[key]["upgradable"] += 1
+            if selected_package.is_auto_removable:
+                self.metricsByOrigin[key]["auto_removable"] += 1
+            if selected_package.is_now_broken:
+                self.metricsByOrigin[key]["broken"] += 1
+
+    def getMetricValue(self, name):
+        metricValue = []
+        for _, value in self.metricsByOrigin.items():
+            v = {}
+            v["label"] = value["label_values"]
+            if name in value:
+                v["value"] = value[name]
+            else:
+                continue
+            metricValue.append(v)
+        return metricValue
