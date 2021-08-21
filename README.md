@@ -9,12 +9,18 @@ This project provides an textfile-based exporter for apt-repositories.
 At the moment, the packages installed and upgradable are exported per repository as gauge. The label set depends on the packet manager type.
 
 ```
-# HELP pkg_installed Installed Packages from this package origin
+# HELP pkg_installed Installed packages per origin
 # TYPE pkg_installed gauge
-pkg_installed{archive="stable",component="main",label="Debian",origin="Debian",site="deb.debian.org",trusted="True"} 293.0
-# HELP pkg_upgradable Upgradable packages in this package origin
+pkg_installed{archive="focal-updates",component="main",label="Ubuntu",origin="Ubuntu",site="ftp.fau.de",trusted="True"} 672.0
+# HELP pkg_upgradable Upgradable packages per origin
 # TYPE pkg_upgradable gauge
-pkg_upgradable{archive="stable",component="main",label="Debian",origin="Debian",site="deb.debian.org",trusted="True"} 0.0
+pkg_upgradable{archive="focal-updates",component="main",label="Ubuntu",origin="Ubuntu",site="ftp.fau.de",trusted="True"} 7.0
+# HELP pkg_auto_removable Auto-removable packages per origin
+# TYPE pkg_auto_removable gauge
+pkg_auto_removable{archive="focal-updates",component="main",label="Ubuntu",origin="Ubuntu",site="ftp.fau.de",trusted="True"} 6.0
+# HELP pkg_broken Broken packages per origin
+# TYPE pkg_broken gauge
+pkg_broken{archive="focal-updates",component="main",label="Ubuntu",origin="Ubuntu",site="ftp.fau.de",trusted="True"} 0.0
 
 ```
 
@@ -24,13 +30,13 @@ Feel free to contribute improvements, as well as support for non-apt based syste
 
 ## Installation
 
-The easiest installation method is downloading the prebuilt binary from the github relase site. 
+The easiest installation method is downloading the prebuilt binary from the github release site. 
 
-Alternatively, the scripts and requirements in the repositoriy may be installed manually.
+Alternatively, the scripts and requirements in the repository may be installed manually.
 
 ### apt-based systems
 
-Currently, only apt-based systems are supported.
+Currently, only apt-based systems are supported. `python3-apt` needs to be installed on the system.
 
 ## Configuration and Usage
 
@@ -39,7 +45,7 @@ The node exporter needs to be configured for textfiles using the `--collector.te
 The default path is `/var/prometheus/pkg-exporter.prom`, and may be changed via the `PKG_EXPORTER_FILE`-Environment Variable.
 If the directory is not already present, it will be created by the exporter.
 
-The script `texfile.py` or the binary shall be executed in a appropriate interval, e.g. using cron or systemd timers.
+The script `textfile.py` or the binary shall be executed in a appropriate interval, e.g. using cron or systemd timers.
 The exporter needs to be executed with appropriate privileges, which are not necessarily root privileges.
 
 An example configuration will be provided in this repository in the future.

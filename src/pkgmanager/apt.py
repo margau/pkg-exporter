@@ -5,14 +5,14 @@ import apt.progress
 class AptPkgManager:
     def __init__(self):
         self.metricDict = {}
-        self.metricDict["installed"] = {"description": "Installed packages \
-                                        per origin"}
-        self.metricDict["upgradable"] = {"description": "Upgradable packages \
-                                         per origin"}
-        self.metricDict["auto_removable"] = {"description": "Auto-removable \
-                                             packages per origin"}
-        self.metricDict["broken"] = {"description": "Broken packages per \
-                                     origin"}
+        self.metricDict["installed"] = \
+            {"description": "Installed packages per origin"}
+        self.metricDict["upgradable"] = \
+            {"description": "Upgradable packages per origin"}
+        self.metricDict["auto_removable"] = \
+            {"description": "Auto-removable packages per origin"}
+        self.metricDict["broken"] = \
+            {"description": "Broken packages per origin"}
         self.metricsByOrigin = {}
         self.cache = apt.Cache()
         self.cache.open(None)
