@@ -36,7 +36,8 @@ for k, v in origins.items():
     g_inst.labels(*label_values).set(v["installed"])
     g_upgr.labels(*label_values).set(v["upgradable"])
 
-exporter_file = os.getenv("PKG_EXPORTER_FILE", "/var/prometheus/pkg-exporter.prom")
+exporter_file = os.getenv("PKG_EXPORTER_FILE",
+                          "/var/prometheus/pkg-exporter.prom")
 exporter_dir = os.path.dirname(exporter_file)
 os.makedirs(exporter_dir, exist_ok=True)
 
