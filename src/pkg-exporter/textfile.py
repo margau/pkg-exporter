@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from prometheus_client import CollectorRegistry, Gauge, write_to_textfile
-from pkgmanager import apt
+from pkg_exporter.pkgmanager import apt
 import os
 
 registry = CollectorRegistry()

@@ -30,9 +30,10 @@ Feel free to contribute improvements, as well as support for non-apt based syste
 
 ## Installation
 
-The easiest installation method is downloading the prebuilt binary from the github release site. 
+Clone the repository and run `python setup.py install` from the main directory.
+You can also use other standard installation methods for python packages.
 
-Alternatively, the scripts and requirements in the repository may be installed manually.
+Alternatively, a single binary built using pyinstaller is provided.
 
 ### apt-based systems
 
@@ -45,7 +46,7 @@ The node exporter needs to be configured for textfiles using the `--collector.te
 The default path is `/var/prometheus/pkg-exporter.prom`, and may be changed via the `PKG_EXPORTER_FILE`-Environment Variable.
 If the directory is not already present, it will be created by the exporter.
 
-The script `textfile.py` or the binary shall be executed in a appropriate interval, e.g. using cron or systemd timers.
+The command `pkg_exporter` provided by the package or the binary shall be executed in a appropriate interval, e.g. using cron or systemd timers.
 The exporter needs to be executed with appropriate privileges, which are not necessarily root privileges.
 
 An example configuration will be provided in this repository in the future.
