@@ -4,6 +4,8 @@ This project provides an textfile-based exporter for apt-repositories.
 
 **The Project is in its early development phases. Interfaces may change without notice. Compatibility and Stability do vary.**
 
+For the changelog, use the [Releases-Section on GitHub](https://github.com/margau/pkg-exporter/releases/)
+
 ## Exported Metrics
 
 At the moment, the packages installed and upgradable are exported per repository as gauge. The label set depends on the packet manager type.

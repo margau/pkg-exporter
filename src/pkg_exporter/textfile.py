@@ -38,3 +38,6 @@ def main():
     os.makedirs(exporter_dir, exist_ok=True)
 
     write_to_textfile(exporter_file, registry)
+
+if __name__ == "__main__":
+    main()
