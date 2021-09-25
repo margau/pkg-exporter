@@ -1,4 +1,7 @@
 name: Publish Python Package
+on:
+  - push
+  - pull_request
 jobs:
   build-n-publish:
     name: Build and publish Python
