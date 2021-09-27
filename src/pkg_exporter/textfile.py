@@ -2,6 +2,7 @@
 
 from prometheus_client import CollectorRegistry, Gauge, write_to_textfile
 from pkg_exporter.pkgmanager import apt
+from pkg_exporter import reboot
 import os
 
 
@@ -14,6 +15,13 @@ def main():
     # initially, check which metrics and labels are available
     metrics = pkgmanager.getMetricDict()
     labels = pkgmanager.getLabelNames()
+
+    # also add reboot metrics
+    rebootmanager = reboot.RebootManager()
+    reboot_gauge = Gauge(
+                'pkg_reboot_required', 'Node Requires an Reboot',
+                [], registry=registry
+                )
 
     # Create all the gauge metrics
     gauges = {}
@@ -31,6 +39,9 @@ def main():
         metricList = pkgmanager.getMetricValue(name)
         for m in metricList:
             gauge.labels(*m["label"]).set(m["value"])
+
+    rebootmanager.query()
+    reboot_gauge.set(rebootmanager.getMetricValue())
 
     exporter_file = os.getenv("PKG_EXPORTER_FILE",
                             "/var/prometheus/pkg-exporter.prom")
