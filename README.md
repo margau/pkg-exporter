@@ -8,9 +8,14 @@ For the changelog, use the [Releases-Section on GitHub](https://github.com/marga
 
 ## Exported Metrics
 
-At the moment, the packages installed and upgradable are exported per repository as gauge. The label set depends on the packet manager type.
+At the moment, the packages installed, upgradable, broken and autoremovable are exported per repository as gauge. The label set depends on the packet manager type.
+
+Additionally, `pkg_reboot_required` is exported to indicate that an reboot is needed.
 
 ```
+# HELP pkg_reboot_required Node Requires an Reboot
+# TYPE pkg_reboot_required gauge
+pkg_reboot_required 1.0
 # HELP pkg_installed Installed packages per origin
 # TYPE pkg_installed gauge
 pkg_installed{archive="focal-updates",component="main",label="Ubuntu",origin="Ubuntu",site="ftp.fau.de",trusted="True"} 672.0
@@ -33,7 +38,7 @@ Feel free to contribute improvements, as well as support for non-apt based syste
 ## Installation
 
 Clone the repository and run `python setup.py install` from the main directory.
-You can also use other standard installation methods for python packages.
+You can also use other standard installation methods for python packages, like directly installing from this git repository.
 
 Alternatively, a single binary built using pyinstaller is provided.
 
