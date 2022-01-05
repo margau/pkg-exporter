@@ -16,6 +16,15 @@ Additionally, `pkg_reboot_required` is exported to indicate that an reboot is ne
 # HELP pkg_reboot_required Node Requires an Reboot
 # TYPE pkg_reboot_required gauge
 pkg_reboot_required 1.0
+# HELP pkg_update_start_time timestamp of last apt update start
+# TYPE pkg_update_start_time gauge
+pkg_update_start_time 1.641382890503045e+09
+# HELP pkg_update_end_time Timestamp of last apt update finish
+# TYPE pkg_update_end_time gauge
+pkg_update_end_time 1.641382892755024e+09
+# HELP pkg_update_time_available Availability of the apt update timestamp
+# TYPE pkg_update_time_available gauge
+pkg_update_time_available 1.0
 # HELP pkg_installed Installed packages per origin
 # TYPE pkg_installed gauge
 pkg_installed{archive="focal-updates",component="main",label="Ubuntu",origin="Ubuntu",site="ftp.fau.de",trusted="True"} 672.0
@@ -58,6 +67,11 @@ The exporter needs to be executed with appropriate privileges, which are not nec
 
 An example configuration will be provided in this repository in the future.
 
+### apt hook
+To enable monitoring for apt update calls, place the file under `docs/00-pve-exporter` in `/etc/apt/apt.conf.d` on your system. It will place files under `/tmp`, you can see the success of monitoring the apt update timestamps if the following metric is 1: `pkg_update_time_available 1.0`
+
+Please not that the presence of an timestamp does not mean that all repositories were updated without issues.
+
 ## Alerting
 
 Example alerting rules will be provided in the future.
@@ -65,5 +79,4 @@ Example alerting rules will be provided in the future.
 ## Roadmap
 
 - Support for other pkg managers
-- Timestamp Support ("Last List/Cache Update")
 - Deployment as dpkg-Packet

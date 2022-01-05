@@ -1,0 +1,4 @@
+# this is the apt hook provided by the pve exporter. This file shall be placed under /etc/apt/apt.conf.d
+APT::Update::Pre-Invoke {"touch /tmp/pkg-exporter-apt-update-pre"; };
+APT::Update::Post-Invoke {"touch /tmp/pkg-exporter-apt-update-post"; };
+APT::Periodic::Update-Package-Lists "1";
