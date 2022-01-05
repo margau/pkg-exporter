@@ -16,6 +16,15 @@ Additionally, `pkg_reboot_required` is exported to indicate that an reboot is ne
 # HELP pkg_reboot_required Node Requires an Reboot
 # TYPE pkg_reboot_required gauge
 pkg_reboot_required 1.0
+# HELP pkg_update_start_time timestamp of last apt update start
+# TYPE pkg_update_start_time gauge
+pkg_update_start_time 1.641382890503045e+09
+# HELP pkg_update_end_time Timestamp of last apt update finish
+# TYPE pkg_update_end_time gauge
+pkg_update_end_time 1.641382892755024e+09
+# HELP pkg_update_time_available Availability of the apt update timestamp
+# TYPE pkg_update_time_available gauge
+pkg_update_time_available 1.0
 # HELP pkg_installed Installed packages per origin
 # TYPE pkg_installed gauge
 pkg_installed{archive="focal-updates",component="main",label="Ubuntu",origin="Ubuntu",site="ftp.fau.de",trusted="True"} 672.0
