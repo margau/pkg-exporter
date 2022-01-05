@@ -1,5 +1,6 @@
 import apt
 import apt.progress
+from pathlib import Path
 
 
 class AptPkgManager:
@@ -14,6 +15,11 @@ class AptPkgManager:
         self.metricDict["broken"] = \
             {"description": "Broken packages per origin"}
         self.metricsByOrigin = {}
+        self.metaMetrics = {}
+        self.metaMetrics["update_time_available"] = 0
+        self.metaMetrics["update_start_time"] = 0
+        self.metaMetrics["update_end_time"] = 0
+
         self.cache = apt.Cache()
         self.cache.open(None)
 
@@ -24,6 +30,16 @@ class AptPkgManager:
 
     def getMetricDict(self):
         return self.metricDict
+
+    def getMetaMetricDict(self):
+        updateMetrics = {}
+        updateMetrics["update_start_time"] = \
+            {"description": "timestamp of last apt update start"}
+        updateMetrics["update_end_time"] = \
+            {"description": "Timestamp of last apt update finish"}
+        updateMetrics["update_time_available"] = \
+            {"description": "Availability of the apt update timestamp"}
+        return updateMetrics
 
     def getLabelNames(self):
         labelNames = ["archive", "component", "label", "origin",
@@ -54,6 +70,15 @@ class AptPkgManager:
                 self.metricsByOrigin[key]["auto_removable"] += 1
             if selected_package.is_now_broken:
                 self.metricsByOrigin[key]["broken"] += 1
+        # apt update time
+        preUpdatePath = Path("/tmp/pkg-exporter-apt-update-pre")
+        postUpdatePath = Path("/tmp/pkg-exporter-apt-update-post")
+        if preUpdatePath.is_file() and postUpdatePath.is_file():
+            self.metaMetrics["update_time_available"] = 1
+            self.metaMetrics["update_start_time"] = \
+                preUpdatePath.stat().st_mtime
+            self.metaMetrics["update_end_time"] = \
+                postUpdatePath.stat().st_mtime
 
     def getMetricValue(self, name):
         metricValue = []
@@ -66,3 +91,6 @@ class AptPkgManager:
                 continue
             metricValue.append(v)
         return metricValue
+
+    def getMetaValue(self, name):
+        return self.metaMetrics[name]

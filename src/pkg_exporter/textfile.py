@@ -15,6 +15,8 @@ def main():
     # initially, check which metrics and labels are available
     metrics = pkgmanager.getMetricDict()
     labels = pkgmanager.getLabelNames()
+    gauges = {}
+    meta_gauges = {}
 
     # also add reboot metrics
     rebootmanager = reboot.RebootManager()
@@ -23,8 +25,15 @@ def main():
                 [], registry=registry
                 )
 
+    # add update statistics
+    meta_metric = pkgmanager.getMetaMetricDict()
+    for key, value in meta_metric.items():
+        meta_gauges[key] = Gauge(
+                f'pkg_{key}', value["description"],
+                registry=registry
+                )
+
     # Create all the gauge metrics
-    gauges = {}
     for key, value in metrics.items():
         gauges[key] = Gauge(
                 f'pkg_{key}', value["description"],
@@ -39,6 +48,9 @@ def main():
         metricList = pkgmanager.getMetricValue(name)
         for m in metricList:
             gauge.labels(*m["label"]).set(m["value"])
+
+    for name, gauge in meta_gauges.items():
+        gauge.set(pkgmanager.getMetaValue(name))
 
     rebootmanager.query()
     reboot_gauge.set(rebootmanager.getMetricValue())
