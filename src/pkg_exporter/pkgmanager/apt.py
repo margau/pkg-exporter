@@ -51,25 +51,25 @@ class AptPkgManager:
             selected_package = self.cache[package_name]
             if not selected_package.is_installed:
                 continue
-            origin = selected_package.candidate.origins[0]
-            key = str(origin)
-            if key not in self.metricsByOrigin:
-                self.metricsByOrigin[key] = {}
-                for k, _ in self.metricDict.items():
-                    self.metricsByOrigin[key][k] = 0
+            for origin in selected_package.candidate.origins:
+                key = str(origin)
+                if key not in self.metricsByOrigin:
+                    self.metricsByOrigin[key] = {}
+                    for k, _ in self.metricDict.items():
+                        self.metricsByOrigin[key][k] = 0
 
-                self.metricsByOrigin[key]["label_values"] = \
-                    self.labelValues(origin)
+                    self.metricsByOrigin[key]["label_values"] = \
+                        self.labelValues(origin)
 
-            # Count Packages for the metrics
-            if selected_package.is_installed:
-                self.metricsByOrigin[key]["installed"] += 1
-            if selected_package.is_upgradable:
-                self.metricsByOrigin[key]["upgradable"] += 1
-            if selected_package.is_auto_removable:
-                self.metricsByOrigin[key]["auto_removable"] += 1
-            if selected_package.is_now_broken:
-                self.metricsByOrigin[key]["broken"] += 1
+                # Count Packages for the metrics
+                if selected_package.is_installed:
+                    self.metricsByOrigin[key]["installed"] += 1
+                if selected_package.is_upgradable:
+                    self.metricsByOrigin[key]["upgradable"] += 1
+                if selected_package.is_auto_removable:
+                    self.metricsByOrigin[key]["auto_removable"] += 1
+                if selected_package.is_now_broken:
+                    self.metricsByOrigin[key]["broken"] += 1
         # apt update time
         preUpdatePath = Path("/tmp/pkg-exporter-apt-update-pre")
         postUpdatePath = Path("/tmp/pkg-exporter-apt-update-post")
