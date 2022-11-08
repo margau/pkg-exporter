@@ -3,9 +3,10 @@ import apt
 import apt.progress
 from pathlib import Path
 
-
 class AptPkgManager:
-    def __init__(self):
+    def __init__(self, rootdir=None):
+        self.rootdir = rootdir
+
         self.metricDict = {}
         self.metricDict["installed"] = {"description": "Installed packages per origin"}
         self.metricDict["upgradable"] = {
@@ -21,7 +22,7 @@ class AptPkgManager:
         self.metaMetrics["update_start_time"] = 0
         self.metaMetrics["update_end_time"] = 0
 
-        self.cache = apt.Cache()
+        self.cache = apt.Cache(rootdir=self.rootdir)
         self.cache.open(None)
 
     def labelValues(self, origin):
