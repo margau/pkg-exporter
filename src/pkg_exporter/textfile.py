@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 
-from prometheus_client import CollectorRegistry, Gauge, write_to_textfile, start_http_server
+from prometheus_client import Gauge, write_to_textfile, start_http_server
+from prometheus_client import GC_COLLECTOR, PLATFORM_COLLECTOR, PROCESS_COLLECTOR
+from prometheus_client.core import REGISTRY
 from time import sleep
 from pkg_exporter.pkgmanager import apt
 from pkg_exporter import reboot
 import argparse
 import os
-import sys
 
-def populate_registry(registry, rootdir=None):
+
+def populate_registry(rootdir=None):
     # get updates from apt
     pkgmanager = apt.AptPkgManager(rootdir=rootdir)
 
@@ -20,20 +22,22 @@ def populate_registry(registry, rootdir=None):
 
     # also add reboot metrics
     rebootmanager = reboot.RebootManager()
-    reboot_gauge = Gauge(
-        "pkg_reboot_required", "Node Requires an Reboot", [], registry=registry
-    )
+    reboot_gauge = REGISTRY._names_to_collectors.get("pkg_reboot_required", None)
+    if not reboot_gauge:
+        reboot_gauge = Gauge("pkg_reboot_required", "Node Requires an Reboot", [])
 
     # add update statistics
     meta_metric = pkgmanager.getMetaMetricDict()
     for key, value in meta_metric.items():
-        meta_gauges[key] = Gauge(f"pkg_{key}", value["description"], registry=registry)
+        meta_gauges[key] = REGISTRY._names_to_collectors.get(f"pkg_{key}", None)
+        if not meta_gauges[key]:
+            meta_gauges[key] = Gauge(f"pkg_{key}", value["description"])
 
     # Create all the gauge metrics
     for key, value in metrics.items():
-        gauges[key] = Gauge(
-            f"pkg_{key}", value["description"], labels, registry=registry
-        )
+        gauges[key] = REGISTRY._names_to_collectors.get(f"pkg_{key}", None)
+        if not gauges[key]:
+            gauges[key] = Gauge(f"pkg_{key}", value["description"], labels)
 
     # let the pkgmanager query its internal metrics
     pkgmanager.query()
@@ -50,64 +54,89 @@ def populate_registry(registry, rootdir=None):
     rebootmanager.query()
     reboot_gauge.set(rebootmanager.getMetricValue())
 
+
 def write_registry_to_file(registry, exporter_file=None):
     if not exporter_file:
-        exporter_file = os.getenv("PKG_EXPORTER_FILE",
-                                  "/var/prometheus/pkg-exporter.prom")
+        exporter_file = os.getenv(
+            "PKG_EXPORTER_FILE", "/var/prometheus/pkg-exporter.prom"
+        )
     exporter_dir = os.path.dirname(exporter_file)
     os.makedirs(exporter_dir, exist_ok=True)
 
     write_to_textfile(exporter_file, registry)
 
-def serve(registry, addr, port, timewait, rootdir):
-    start_http_server(addr=addr, port=port, registry=registry)
+
+def serve(addr, port, timewait, rootdir):
+    start_http_server(addr=addr, port=port)
     while True:
         sleep(timewait)
-        registry = CollectorRegistry()
-        populate_registry(registry, rootdir)
+        populate_registry(rootdir)
 
 
 def processArgs():
     parser = argparse.ArgumentParser(
-        description="Collect metrics from apt and export it as a service")
+        description="Collect metrics from apt and export it as a service"
+    )
     group = parser.add_mutually_exclusive_group()
 
-    group.add_argument("-f", "--exporter-file",
+    group.add_argument(
+        "-f",
+        "--exporter-file",
         type=str,
-        default=os.getenv('PKG_EXPORTER_FILE', "/var/prometheus/pkg-exporter.prom"),
-        help="File to export, if used the content will not be served")
-    group.add_argument("-d", "--daemon",
-        action='store_true',
-        help="Run as daemon and server metric via http")
-    parser.add_argument("-a", "--bind-addr",
+        default=os.getenv("PKG_EXPORTER_FILE", "/var/prometheus/pkg-exporter.prom"),
+        help="File to export, if used the content will not be served",
+    )
+    group.add_argument(
+        "-d",
+        "--daemon",
+        action="store_true",
+        help="Run as daemon and server metrics via http",
+    )
+    parser.add_argument(
+        "-a",
+        "--bind-addr",
         type=str,
-        default=os.getenv('PKG_EXPORTER_ADDR', '0.0.0.0'),
-        help="Bind address")
-    parser.add_argument("-p", "--port",
+        default=os.getenv("PKG_EXPORTER_ADDR", "0.0.0.0"),
+        help="Bind address",
+    )
+    parser.add_argument(
+        "-p",
+        "--port",
         type=int,
-        default=os.getenv('PKG_EXPORTER_PORT', 8089),
-        help="Bind port")
-    parser.add_argument("-r", "--rootdir",
+        default=os.getenv("PKG_EXPORTER_PORT", 8089),
+        help="Bind port",
+    )
+    parser.add_argument(
+        "-r",
+        "--rootdir",
         type=str,
-        default=os.getenv('PKG_EXPORTER_ROOT_DIR', None),
-        help="Custom root directory for dpkg")
-    parser.add_argument("-t", "--time-wait",
+        default=os.getenv("PKG_EXPORTER_ROOT_DIR", None),
+        help="Custom root directory for dpkg",
+    )
+    parser.add_argument(
+        "-t",
+        "--time-wait",
         type=int,
-        default=os.getenv('PKG_EXPORTER_TIME_WAIT', 300),
-        help="time (in second) to wait between data updates")
+        default=os.getenv("PKG_EXPORTER_TIME_WAIT", 300),
+        help="time (in second) to wait between data updates",
+    )
     return parser.parse_args()
+
 
 def main():
     args = processArgs()
-    registry = CollectorRegistry()
-    populate_registry(registry, args.rootdir)
+
+    REGISTRY.unregister(GC_COLLECTOR)
+    REGISTRY.unregister(PLATFORM_COLLECTOR)
+    REGISTRY.unregister(PROCESS_COLLECTOR)
+
+    populate_registry(args.rootdir)
 
     if not args.daemon:
-        write_registry_to_file(registry, args.exporter_file)
+        write_registry_to_file(REGISTRY, args.exporter_file)
     else:
-        serve(registry, args.bind_addr, args.port, args.time_wait, args.rootdir)
+        serve(args.bind_addr, args.port, args.time_wait, args.rootdir)
 
 
 if __name__ == "__main__":
     main()
-
