@@ -1,5 +1,6 @@
 [tool.poetry]
 name = "pkg-exporter"
+version = "0.0.0"
 description = "This project provides an textfile-based exporter for apt-repositories"
 authors = ["Marvin Gaube <dev@marvingaube.de>"]
 license = "GPL3"
