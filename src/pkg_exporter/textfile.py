@@ -56,11 +56,12 @@ def main():
     reboot_gauge.set(rebootmanager.getMetricValue())
 
     exporter_file = os.getenv("PKG_EXPORTER_FILE",
-                            "/var/prometheus/pkg-exporter.prom")
+                              "/var/prometheus/pkg-exporter.prom")
     exporter_dir = os.path.dirname(exporter_file)
     os.makedirs(exporter_dir, exist_ok=True)
 
     write_to_textfile(exporter_file, registry)
+
 
 if __name__ == "__main__":
     main()
