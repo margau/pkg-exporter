@@ -1,0 +1,36 @@
+name: Publish Python Package
+on:
+  - push
+  - pull_request
+jobs:
+  build-n-publish:
+    name: Build and publish Python
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - uses: actions/cache@v2
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/poetry.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-${{ hashFiles('**/poetry.lock') }}
+    - name: Install Dependencies
+      run: |
+        python -m pip install poetry
+        poetry self add "poetry-dynamic-versioning[plugin]"
+        poetry install
+        apt install debhelper python3-all
+    - name: Build a binary wheel and a source tarball
+      run: >-
+        poetry build
+    - name: Build source pkg
+      run: >-
+         poetry run py2dsc dist/pkg_exporter-*.tar.gz
+    - name: Build debian pkg
+      run: >-
+         cd deb_dist/pkg-exporter-*
+         dpkg-buildpackage -rfakeroot -uc -us
