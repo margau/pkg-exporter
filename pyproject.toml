@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "pkg-exporter"
+version = "0.2.5"
+description = "This project provides an textfile-based exporter for apt-repositories"
+authors = ["Marvin Gaube <dev@marvingaube.de>"]
+license = "GPL3"
+readme = "README.md"
+
+
+[tool.poetry.dependencies]
+python = "^3.6"
+prometheus-client = "^0.15.0"
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+pkg_exporter = 'pkg_exporter.textfile:main'
