@@ -1,10 +1,10 @@
-name: Publish Python Package
+name: Build .deb Package
 on:
   - push
   - pull_request
 jobs:
   build-n-publish:
-    name: Build and publish Python
+    name: Build and publish dpkg package
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
