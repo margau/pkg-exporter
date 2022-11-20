@@ -25,4 +25,4 @@ jobs:
           python -m pip install poetry
           poetry install
       - name: Lint with flake8
-        run: ./scripts/lint.py
+        run: poetry run flake8 --show-source src
