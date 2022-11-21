@@ -34,6 +34,6 @@ jobs:
       run: >-
          poetry run py2dsc dist/pkg_exporter-*.tar.gz
     - name: Build debian pkg
-      run: >-
-         cd deb_dist/pkg-exporter-*
-         dpkg-buildpackage -rfakeroot -uc -us
+      run: |
+        cd deb_dist/pkg-exporter-*
+        dpkg-buildpackage -rfakeroot -uc -us
