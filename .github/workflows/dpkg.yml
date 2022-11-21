@@ -26,7 +26,7 @@ jobs:
         python -m pip install poetry-dynamic-versioning
         poetry self add "poetry-dynamic-versioning[plugin]"
         poetry install
-        sudo apt install debhelper python3-all
+        sudo apt install debhelper python3-all dh-python
     - name: Build a binary wheel and a source tarball
       run: >-
         poetry build
