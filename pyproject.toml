@@ -18,6 +18,7 @@ stdeb = "^0.10.0"
 [tool.poetry-dynamic-versioning]
 enable = true
 dirty = true
+strict = true
 
 [build-system]
 requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
