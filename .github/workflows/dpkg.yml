@@ -30,7 +30,7 @@ jobs:
     - name: Build a binary wheel and a source tarball
       run: >-
         poetry build
-        poetry run dephell deps convert --from-format=sdist --from-path=dist/pkg_exporter-*.tar.gz --to=setup.py
+        poetry run dephell deps convert --from-format=wheel --from-path=dist/pkg_exporter-*.whl --to=setup.py
         poetry build
     - name: Build source pkg
       run: >-
