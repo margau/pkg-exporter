@@ -1,3 +1,4 @@
+import os
 import apt
 import apt.progress
 from pathlib import Path
@@ -71,8 +72,13 @@ class AptPkgManager:
                 if selected_package.is_now_broken:
                     self.metricsByOrigin[key]["broken"] += 1
         # apt update time
-        preUpdatePath = Path("/tmp/pkg-exporter-apt-update-pre")
-        postUpdatePath = Path("/tmp/pkg-exporter-apt-update-post")
+        preUpdatePath = Path(
+            os.getenv("PKG_EXPORTER_APT_PRE_FILE", "/tmp/pkg-exporter-apt-update-pre")
+        )
+        postUpdatePath = Path(
+            os.getenv("PKG_EXPORTER_APT_POST_FILE", "/tmp/pkg-exporter-apt-update-post")
+        )
+
         if preUpdatePath.is_file() and postUpdatePath.is_file():
             self.metaMetrics["update_time_available"] = 1
             self.metaMetrics["update_start_time"] = \
