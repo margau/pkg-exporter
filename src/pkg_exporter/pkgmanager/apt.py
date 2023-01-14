@@ -73,10 +73,16 @@ class AptPkgManager:
                     self.metricsByOrigin[key]["broken"] += 1
         # apt update time
         preUpdatePath = Path(
-            os.getenv("PKG_EXPORTER_APT_PRE_FILE", "/tmp/pkg-exporter-apt-update-pre")
+            os.getenv(
+                "PKG_EXPORTER_APT_PRE_FILE",
+                "/tmp/pkg-exporter-apt-update-pre",
+            )
         )
         postUpdatePath = Path(
-            os.getenv("PKG_EXPORTER_APT_POST_FILE", "/tmp/pkg-exporter-apt-update-post")
+            os.getenv(
+                "PKG_EXPORTER_APT_POST_FILE",
+                "/tmp/pkg-exporter-apt-update-post",
+            )
         )
 
         if preUpdatePath.is_file() and postUpdatePath.is_file():
