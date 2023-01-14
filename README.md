@@ -70,7 +70,9 @@ The exporter needs to be executed with appropriate privileges, which are not nec
 An example configuration will be provided in this repository in the future.
 
 ### apt hook
-To enable monitoring for apt update calls, place the file under `docs/00-pve-exporter` in `/etc/apt/apt.conf.d` on your system. It will place files under `/tmp`, you can see the success of monitoring the apt update timestamps if the following metric is 1: `pkg_update_time_available 1.0`
+To enable monitoring for apt update calls, place the file under `docs/00-pve-exporter` in `/etc/apt/apt.conf.d` on your system.
+It will place files under `/tmp`. To customize the filepath of the timestamp files, the the environment variables `PKG_EXPORTER_APT_PRE_FILE` & `PKG_EXPORTER_APT_POST_FILE` may be used.
+You can see the success of monitoring the apt update timestamps if the following metric is 1: `pkg_update_time_available 1.0`
 
 Please not that the presence of an timestamp does not mean that all repositories were updated without issues.
 
