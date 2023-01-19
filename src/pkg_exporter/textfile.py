@@ -21,24 +21,19 @@ def main():
     # also add reboot metrics
     rebootmanager = reboot.RebootManager()
     reboot_gauge = Gauge(
-                'pkg_reboot_required', 'Node Requires an Reboot',
-                [], registry=registry
-                )
+        "pkg_reboot_required", "Node Requires an Reboot", [], registry=registry
+    )
 
     # add update statistics
     meta_metric = pkgmanager.getMetaMetricDict()
     for key, value in meta_metric.items():
-        meta_gauges[key] = Gauge(
-                f'pkg_{key}', value["description"],
-                registry=registry
-                )
+        meta_gauges[key] = Gauge(f"pkg_{key}", value["description"], registry=registry)
 
     # Create all the gauge metrics
     for key, value in metrics.items():
         gauges[key] = Gauge(
-                f'pkg_{key}', value["description"],
-                labels, registry=registry
-                )
+            f"pkg_{key}", value["description"], labels, registry=registry
+        )
 
     # let the pkgmanager query its internal metrics
     pkgmanager.query()
@@ -55,8 +50,7 @@ def main():
     rebootmanager.query()
     reboot_gauge.set(rebootmanager.getMetricValue())
 
-    exporter_file = os.getenv("PKG_EXPORTER_FILE",
-                              "/var/prometheus/pkg-exporter.prom")
+    exporter_file = os.getenv("PKG_EXPORTER_FILE", "/var/prometheus/pkg-exporter.prom")
     exporter_dir = os.path.dirname(exporter_file)
     os.makedirs(exporter_dir, exist_ok=True)
 
