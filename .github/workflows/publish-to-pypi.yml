@@ -29,5 +29,5 @@ jobs:
       run: >-
         poetry build
     - name: Publish distribution 📦 to PyPI
-      if: ${{startsWith(github.ref, 'refs/tags') || (github.ref == 'refs/heads/main')}}
+      if: ${{startsWith(github.ref, 'refs/tags')}}
       run: poetry publish --username __token__ --password ${{ secrets.PYPI_API_TOKEN }}
