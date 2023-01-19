@@ -13,6 +13,8 @@ prometheus-client = "^0.15.0"
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "*"
+black = { version = "*", allow-prereleases = true }
+flake8-black = "*"
 
 [tool.poetry-dynamic-versioning]
 enable = true
