@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from prometheus_client import Gauge, write_to_textfile, start_http_server
-from prometheus_client import GC_COLLECTOR, PLATFORM_COLLECTOR, PROCESS_COLLECTOR
+from prometheus_client import GC_COLLECTOR, PLATFORM_COLLECTOR, PROCESS_COLLECTOR   # noqa E501
 from prometheus_client.core import REGISTRY
 from time import sleep
 from pkg_exporter.pkgmanager import apt
@@ -22,14 +22,19 @@ def populate_registry(rootdir=None):
 
     # also add reboot metrics
     rebootmanager = reboot.RebootManager()
-    reboot_gauge = REGISTRY._names_to_collectors.get("pkg_reboot_required", None)
+    reboot_gauge = REGISTRY._names_to_collectors.get(
+        "pkg_reboot_required", None)
     if not reboot_gauge:
-        reboot_gauge = Gauge("pkg_reboot_required", "Node Requires an Reboot", [])
+        reboot_gauge = Gauge(
+            "pkg_reboot_required",
+            "Node Requires an Reboot",
+            [])
 
     # add update statistics
     meta_metric = pkgmanager.getMetaMetricDict()
     for key, value in meta_metric.items():
-        meta_gauges[key] = REGISTRY._names_to_collectors.get(f"pkg_{key}", None)
+        meta_gauges[key] = REGISTRY._names_to_collectors.get(
+            f"pkg_{key}", None)
         if not meta_gauges[key]:
             meta_gauges[key] = Gauge(f"pkg_{key}", value["description"])
 
@@ -83,7 +88,9 @@ def processArgs():
         "-f",
         "--exporter-file",
         type=str,
-        default=os.getenv("PKG_EXPORTER_FILE", "/var/prometheus/pkg-exporter.prom"),
+        default=os.getenv(
+            "PKG_EXPORTER_FILE",
+            "/var/prometheus/pkg-exporter.prom"),
         help="File to export, if used the content will not be served",
     )
     group.add_argument(

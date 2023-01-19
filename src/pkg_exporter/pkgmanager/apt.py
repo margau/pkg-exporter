@@ -3,6 +3,7 @@ import apt
 import apt.progress
 from pathlib import Path
 
+
 class AptPkgManager:
     def __init__(self, rootdir=None):
         self.rootdir = rootdir
