@@ -46,12 +46,22 @@ Feel free to contribute improvements, as well as support for non-apt based syste
 
 ## Installation
 
+### Global pip installation
 Run `pip3 install pkg-exporter`.
 
+### Install from source
 Clone the repository and run `poetry install` from the main directory.
 You can also use other standard installation methods for python packages, like directly installing from this git repository.
 
 The pyinstaller-based binary is not provided any more.
+
+### pipx
+If a global pip installation is not possible (e.g. from debian 12 onwards), you can use [pipx](https://pypa.github.io/pipx), either for install, and/or for running pkg-exporter ad hoc:
+```
+pipx run --system-site-packages pkg-exporter
+```
+
+`--system-site-packages` is necessary to provide access to the system python3-apt lib.
 
 ### apt-based systems
 
