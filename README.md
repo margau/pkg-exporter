@@ -77,6 +77,16 @@ If the directory is not already present, it will be created by the exporter.
 The command `pkg_exporter` provided by the package or the binary shall be executed in a appropriate interval, e.g. using cron or systemd timers.
 The exporter needs to be executed with appropriate privileges, which are not necessarily root privileges.
 
+Several command line options can be used along with the `pkg_exporter` command, which are as follows:
+| Option | Description |
+| ------- | --------- | 
+| -f, --exporter-file | The file where prometheus metrics are exported, default is `/var/prometheus/pkg-exporter.prom` |
+| -d, --daemon | Run as daemon and serve metrics via http. |
+| -a, --bind-addr | The address to serve metrics via http. Default is `0.0.0.0` |
+| -p, --port | The port to serve metrics via http. Default is `8089` | 
+| -r, --rootdir | Custom root directory for dpkg, if any. |
+| -t, --time-wait | Time, in seconds, to wait between metrics updates. Default is 300 |
+
 An example configuration will be provided in this repository in the future.
 
 ### apt hook
