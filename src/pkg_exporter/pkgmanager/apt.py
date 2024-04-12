@@ -1,3 +1,4 @@
+import os
 import apt
 import apt.progress
 from pathlib import Path
@@ -6,14 +7,14 @@ from pathlib import Path
 class AptPkgManager:
     def __init__(self):
         self.metricDict = {}
-        self.metricDict["installed"] = \
-            {"description": "Installed packages per origin"}
-        self.metricDict["upgradable"] = \
-            {"description": "Upgradable packages per origin"}
-        self.metricDict["auto_removable"] = \
-            {"description": "Auto-removable packages per origin"}
-        self.metricDict["broken"] = \
-            {"description": "Broken packages per origin"}
+        self.metricDict["installed"] = {"description": "Installed packages per origin"}
+        self.metricDict["upgradable"] = {
+            "description": "Upgradable packages per origin"
+        }
+        self.metricDict["auto_removable"] = {
+            "description": "Auto-removable packages per origin"
+        }
+        self.metricDict["broken"] = {"description": "Broken packages per origin"}
         self.metricsByOrigin = {}
         self.metaMetrics = {}
         self.metaMetrics["update_time_available"] = 0
@@ -24,8 +25,14 @@ class AptPkgManager:
         self.cache.open(None)
 
     def labelValues(self, origin):
-        labelValues = [origin.archive, origin.component, origin.label,
-                       origin.origin, origin.site, origin.trusted]
+        labelValues = [
+            origin.archive,
+            origin.component,
+            origin.label,
+            origin.origin,
+            origin.site,
+            origin.trusted,
+        ]
         return labelValues
 
     def getMetricDict(self):
@@ -33,17 +40,19 @@ class AptPkgManager:
 
     def getMetaMetricDict(self):
         updateMetrics = {}
-        updateMetrics["update_start_time"] = \
-            {"description": "timestamp of last apt update start"}
-        updateMetrics["update_end_time"] = \
-            {"description": "Timestamp of last apt update finish"}
-        updateMetrics["update_time_available"] = \
-            {"description": "Availability of the apt update timestamp"}
+        updateMetrics["update_start_time"] = {
+            "description": "timestamp of last apt update start"
+        }
+        updateMetrics["update_end_time"] = {
+            "description": "Timestamp of last apt update finish"
+        }
+        updateMetrics["update_time_available"] = {
+            "description": "Availability of the apt update timestamp"
+        }
         return updateMetrics
 
     def getLabelNames(self):
-        labelNames = ["archive", "component", "label", "origin",
-                      "site", "trusted"]
+        labelNames = ["archive", "component", "label", "origin", "site", "trusted"]
         return labelNames
 
     def query(self):
@@ -58,8 +67,7 @@ class AptPkgManager:
                     for k, _ in self.metricDict.items():
                         self.metricsByOrigin[key][k] = 0
 
-                    self.metricsByOrigin[key]["label_values"] = \
-                        self.labelValues(origin)
+                    self.metricsByOrigin[key]["label_values"] = self.labelValues(origin)
 
                 # Count Packages for the metrics
                 if selected_package.is_installed:
@@ -71,14 +79,23 @@ class AptPkgManager:
                 if selected_package.is_now_broken:
                     self.metricsByOrigin[key]["broken"] += 1
         # apt update time
-        preUpdatePath = Path("/tmp/pkg-exporter-apt-update-pre")
-        postUpdatePath = Path("/tmp/pkg-exporter-apt-update-post")
+        preUpdatePath = Path(
+            os.getenv(
+                "PKG_EXPORTER_APT_PRE_FILE",
+                "/tmp/pkg-exporter-apt-update-pre",
+            )
+        )
+        postUpdatePath = Path(
+            os.getenv(
+                "PKG_EXPORTER_APT_POST_FILE",
+                "/tmp/pkg-exporter-apt-update-post",
+            )
+        )
+
         if preUpdatePath.is_file() and postUpdatePath.is_file():
             self.metaMetrics["update_time_available"] = 1
-            self.metaMetrics["update_start_time"] = \
-                preUpdatePath.stat().st_mtime
-            self.metaMetrics["update_end_time"] = \
-                postUpdatePath.stat().st_mtime
+            self.metaMetrics["update_start_time"] = preUpdatePath.stat().st_mtime
+            self.metaMetrics["update_end_time"] = postUpdatePath.stat().st_mtime
 
     def getMetricValue(self, name):
         metricValue = []

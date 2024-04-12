@@ -46,10 +46,22 @@ Feel free to contribute improvements, as well as support for non-apt based syste
 
 ## Installation
 
-Clone the repository and run `python setup.py install` from the main directory.
+### Global pip installation
+Run `pip3 install pkg-exporter`.
+
+### Install from source
+Clone the repository and run `poetry install` from the main directory.
 You can also use other standard installation methods for python packages, like directly installing from this git repository.
 
-Alternatively, a single binary built using pyinstaller is provided.
+The pyinstaller-based binary is not provided any more.
+
+### pipx
+If a global pip installation is not possible (e.g. from debian 12 onwards), you can use [pipx](https://pypa.github.io/pipx), either for install, and/or for running pkg-exporter ad hoc:
+```
+pipx run --system-site-packages pkg-exporter
+```
+
+`--system-site-packages` is necessary to provide access to the system python3-apt lib.
 
 ### apt-based systems
 
@@ -68,7 +80,9 @@ The exporter needs to be executed with appropriate privileges, which are not nec
 An example configuration will be provided in this repository in the future.
 
 ### apt hook
-To enable monitoring for apt update calls, place the file under `docs/00-pve-exporter` in `/etc/apt/apt.conf.d` on your system. It will place files under `/tmp`, you can see the success of monitoring the apt update timestamps if the following metric is 1: `pkg_update_time_available 1.0`
+To enable monitoring for apt update calls, place the file under `docs/00-pve-exporter` in `/etc/apt/apt.conf.d` on your system.
+It will place files under `/tmp`. To customize the filepath of the timestamp files, the the environment variables `PKG_EXPORTER_APT_PRE_FILE` & `PKG_EXPORTER_APT_POST_FILE` may be used.
+You can see the success of monitoring the apt update timestamps if the following metric is 1: `pkg_update_time_available 1.0`
 
 Please not that the presence of an timestamp does not mean that all repositories were updated without issues.
 
