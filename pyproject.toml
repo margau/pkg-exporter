@@ -27,6 +27,7 @@ pkg-exporter = 'pkg_exporter.textfile:main'
 [tool.uv]
 dev-dependencies = [
   "ruff",
+  "pylint",
 ]
 
 # TODO: Dev/CI scripts for lint & co.
