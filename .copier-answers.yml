@@ -1,4 +1,4 @@
 # Changes here will be overwritten by Copier.
-_commit: c2913ee
+_commit: HEAD
 _src_path: https://codeberg.org/margau/copier-python-uv.git
 project_name: pkg-exporter
