@@ -9,7 +9,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-prometheus-client = "^0.15.0"
+prometheus-client = "^0.22.0"
 
 [tool.poetry.group.dev.dependencies]
 flake8 = "4.0.1"
