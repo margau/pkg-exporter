@@ -1,28 +1,29 @@
-[tool.poetry]
+[project]
 name = "pkg-exporter"
-version = "0.0.0"
 description = "This project provides an textfile-based exporter for apt-repositories"
 authors = ["Vanessa Gaube <dev@vanessagaube.de>"]
 license = "GPL3"
 readme = "README.md"
-
-
-[tool.poetry.dependencies]
-python = "^3.9"
-prometheus-client = "^0.22.0"
-
-[tool.poetry.group.dev.dependencies]
-flake8 = "4.0.1"
-black = { version = "20.8b1", allow-prereleases = true }
-flake8-black = "0.2.4"
-
-[tool.poetry-dynamic-versioning]
-enable = true
-dirty = true
+requires-python = ">=3.10"
+dynamic = ["version"]
 
 [build-system]
-requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
-build-backend = "poetry_dynamic_versioning.backend"
+requires = ["hatchling", "uv-dynamic-versioning"]
+build-backend = "hatchling.build"
 
-[tool.poetry.scripts]
+[tool.hatch.version]
+source = "uv-dynamic-versioning"
+
+# TODO: URLs
+
+# TODO: Dependencies
+
+# Dev Dependencies
+[tool.uv]
+dev-dependencies = [
+  "ruff",
+]
+
+# Scripts
+[project.scripts]
 pkg-exporter = 'pkg_exporter.textfile:main'
