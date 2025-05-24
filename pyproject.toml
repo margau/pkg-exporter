@@ -2,13 +2,13 @@
 name = "pkg-exporter"
 version = "0.0.0"
 description = "This project provides an textfile-based exporter for apt-repositories"
-authors = ["Marvin Gaube <dev@marvingaube.de>"]
+authors = ["Vanessa Gaube <dev@vanessagaube.de>"]
 license = "GPL3"
 readme = "README.md"
 
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.9"
 prometheus-client = "^0.15.0"
 
 [tool.poetry.group.dev.dependencies]
