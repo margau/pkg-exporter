@@ -2,11 +2,5 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "local>margau/renovate-config"
-  ],
-  "copier":{
-    "managerFilePatterns": [
-      "/(^|/)\\.copier-answers(\\..+)?\\.ya?ml/"
-    ],
-    "versioning": "git"
-  }
+  ]
 }
