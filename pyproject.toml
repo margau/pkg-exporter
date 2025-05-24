@@ -1,11 +1,14 @@
 [project]
 name = "pkg-exporter"
 description = "This project provides an textfile-based exporter for apt-repositories"
-authors = ["Vanessa Gaube <dev@vanessagaube.de>"]
-license = "GPL3"
+authors = [{name = "Vanessa Gaube", email = "dev@vanessagaube.de"}]
+license = "GPL-3.0"
 readme = "README.md"
 requires-python = ">=3.10"
 dynamic = ["version"]
+dependencies = [
+    "prometheus-client>=0.22.0",
+]
 
 [build-system]
 requires = ["hatchling", "uv-dynamic-versioning"]
