@@ -29,8 +29,4 @@ dev-dependencies = [
   "ruff",
 ]
 
-# Scripts
-[project.scripts]
-pkg-exporter = 'pkg_exporter.textfile:main'
-
 # TODO: Dev/CI scripts for lint & co.
