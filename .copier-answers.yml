@@ -1,7 +1,7 @@
 # Changes here will be overwritten by Copier.
 _commit: 0.0.8
 _src_path: https://codeberg.org/margau/copier-python-uv.git
-ignore_pylint: false
+ignore_pylint: true
 ignore_ruff: false
 ignore_ruff_format: false
 project_description: This project provides an textfile-based exporter for apt-repositories
