@@ -1,5 +1,5 @@
 # Changes here will be overwritten by Copier.
-_commit: 0.0.1
+_commit: 0.0.2
 _src_path: https://codeberg.org/margau/copier-python-uv.git
 project_description: This project provides an textfile-based exporter for apt-repositories
 project_name: pkg-exporter
