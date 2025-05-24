@@ -19,7 +19,9 @@ source = "uv-dynamic-versioning"
 
 # TODO: URLs
 
-# TODO: Dependencies
+# Scripts
+[project.scripts]
+pkg-exporter = 'pkg_exporter.textfile:main'
 
 # Dev Dependencies
 [tool.uv]
@@ -30,3 +32,5 @@ dev-dependencies = [
 # Scripts
 [project.scripts]
 pkg-exporter = 'pkg_exporter.textfile:main'
+
+# TODO: Dev/CI scripts for lint & co.
