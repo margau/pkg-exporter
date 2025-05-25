@@ -5,7 +5,7 @@
   ],
   "packageRules": [
     {
-      "matchFiles": [
+      "matchFileNames": [
         ".forgejo/workflows/commitlint.yaml",
         ".forgejo/workflows/lint.yaml"
       ],
