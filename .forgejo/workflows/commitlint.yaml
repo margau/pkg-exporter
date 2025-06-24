@@ -8,7 +8,7 @@ jobs:
   forgejo:
     runs-on: docker
     container:
-      image: commitlint/commitlint:master@sha256:1583d24ac88c465cb395f2819d28815f72f37bbbd48cd447f3c5d4af8cca95a4
+      image: commitlint/commitlint:master@sha256:70d367bc6a8284c67dd07a89b5d3740a3ab6df8ad097c3637605fa03874b331d
 
     steps:
       - uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
