@@ -11,11 +11,14 @@ dependencies = [
 ]
 
 [build-system]
-requires = ["hatchling", "uv-dynamic-versioning"]
+requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
 
 [tool.hatch.version]
-source = "uv-dynamic-versioning"
+source = "vcs"
+
+[tool.hatch.version.raw-options]
+local_scheme = "no-local-version"
 
 # TODO: URLs
 
@@ -29,5 +32,6 @@ dev-dependencies = [
   "ruff",
   "pylint",
 ]
+cache-keys = [{ file = "pyproject.toml" }, { git = { commit = true, tags = true } }]
 
 # TODO: Dev/CI scripts for lint & co.
