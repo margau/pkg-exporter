@@ -1,4 +1,4 @@
-name: lint
+name: publish
 
 on:
   push:
@@ -16,5 +16,13 @@ jobs:
           fetch-depth: 0
       - name: Build the project
         run: uv build
-        
-        
+      - name: Publish release to pypi
+        run: uv publish
+        if: ${{ startsWith(github.ref, 'refs/tags') }}
+        with:
+          UV_PUBLISH_TOKEN: ${{ secrets.UV_PUBLISH_TOKEN }}
+      - name: Publish dev version to pypi
+        run: uv publish
+        if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+          UV_PUBLISH_TOKEN: ${{ secrets.UV_PUBLISH_TOKEN }}
