@@ -7,7 +7,8 @@
     {
       "matchFileNames": [
         ".forgejo/workflows/commitlint.yaml",
-        ".forgejo/workflows/lint.yaml"
+        ".forgejo/workflows/lint.yaml",
+        ".forgejo/workflows/publish.yaml"
       ],
       "enabled": false
     },
