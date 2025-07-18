@@ -8,8 +8,13 @@ jobs:
   forgejo:
     runs-on: docker
     container:
+<<<<<<< before updating
       image: codeberg.org/margau/buildenv-uv:latest@sha256:c43d992c307444b6675adeb9585c34edd8ea716ff717202cbff175d168262ebc
 
+=======
+      image: codeberg.org/margau/buildenv-uv:latest@sha256:5d3fe227826bb7978f2c0d671c89b28ec13934e2d579a7479e9711464800c8f5
+    
+>>>>>>> after updating
     steps:
       - uses: https://code.forgejo.org/actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
@@ -18,11 +23,11 @@ jobs:
         run: uv build
       - name: Publish release to pypi
         run: uv publish
-        if: ${{ startsWith(github.ref, 'refs/tags') }}
+        if: "${{ startsWith(github.ref, 'refs/tags') }}"
         env:
-          UV_PUBLISH_TOKEN: ${{ secrets.UV_PUBLISH_TOKEN }}
+          UV_PUBLISH_TOKEN: " ${{ secrets.UV_PUBLISH_TOKEN }}"
       - name: Publish dev version to pypi
         run: uv publish
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: "${{ startsWith(github.ref, 'refs/tags') }}"
         env:
-          UV_PUBLISH_TOKEN: ${{ secrets.UV_PUBLISH_TOKEN }}
+          UV_PUBLISH_TOKEN: " ${{ secrets.UV_PUBLISH_TOKEN }}"

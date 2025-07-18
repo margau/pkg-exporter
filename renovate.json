@@ -13,6 +13,17 @@
       "enabled": false
     },
     {
+      "matchFileNames": [
+        ".forgejo/workflows/commitlint.yaml",
+        ".forgejo/workflows/lint.yaml",
+        ".forgejo/workflows/publish.yaml"
+      ],
+      "matchManagers": [
+        "copier"
+      ],
+      "enabled": true
+    },
+    {
       "matchManagers": [
         "docker-compose"
       ],
