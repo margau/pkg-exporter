@@ -19,8 +19,10 @@ source = "vcs"
 
 [tool.hatch.version.raw-options]
 local_scheme = "no-local-version"
-
-# TODO: URLs
+[project.urls]
+Documentation = "https://codeberg.org/margau/pkg-exporter/README.md"
+Issues = "https://codeberg.org/margau/pkg-exporter/issues"
+Source = "https://codeberg.org/margau/pkg-exporter.git"
 
 # Scripts
 [project.scripts]
