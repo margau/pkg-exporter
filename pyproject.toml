@@ -29,7 +29,9 @@ Source = "https://codeberg.org/margau/pkg-exporter.git"
 
 # Scripts
 [project.scripts]
-pkg-exporter = 'pkg_exporter.textfile:main'
+
+pkg-exporter = "pkg_exporter.textfile:main"
+
 
 # Dev Dependencies
 [tool.uv]
