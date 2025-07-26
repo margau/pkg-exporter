@@ -9,3 +9,5 @@ project_description: This project provides an textfile-based exporter for apt-re
 project_name: pkg-exporter
 pypi_publish: true
 pypi_publish_dev: true
+
+#copier updated
