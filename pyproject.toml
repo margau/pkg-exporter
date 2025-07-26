@@ -26,10 +26,8 @@ Documentation = "https://codeberg.org/margau/pkg-exporter/src/branch/main#readme
 Issues = "https://codeberg.org/margau/pkg-exporter/issues"
 Source = "https://codeberg.org/margau/pkg-exporter.git"
 
-
 # Scripts
 [project.scripts]
-
 pkg-exporter = "pkg_exporter.textfile:main"
 
 
