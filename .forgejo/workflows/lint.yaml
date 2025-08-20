@@ -8,7 +8,7 @@ jobs:
   forgejo:
     runs-on: docker
     container:
-      image: codeberg.org/margau/buildenv-uv:latest@sha256:96abf96e412eabcf80e16659f51a5b591abf0866322dd80f8efa673ea4c583fc
+      image: codeberg.org/margau/buildenv-uv:latest@sha256:9e7554c54f3e55735ad02e9c70170039d3546acbed85f5e1bc4a261d1a2bcc8f
 
     steps:
       - uses: https://code.forgejo.org/actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
