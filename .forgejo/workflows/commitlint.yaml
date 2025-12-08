@@ -8,10 +8,10 @@ jobs:
   forgejo:
     runs-on: docker
     container:
-      image: codeberg.org/margau/buildenv-commitlint:latest@sha256:f202e07e9f96b1d4fe616736cc0ad56123ca7434d5ab0bbab44ab9da6ae15651
+      image: codeberg.org/margau/buildenv-commitlint:latest@sha256:70299249a11867f0d7034ef48dfd9fb98b4b598b08585b7317a1ec41f92dc5f8
 
     steps:
-      - uses: https://code.forgejo.org/actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6
+      - uses: https://code.forgejo.org/actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
         with:
           fetch-depth: 0
       - name: Validate current commit (last commit) with commitlint
