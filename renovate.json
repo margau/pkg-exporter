@@ -1,7 +1,7 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "local>margau/renovate-config"
+    "https://codeberg.org/margau/renovate-defaults/raw/branch/main/default.json"
   ],
   "packageRules": [
     {
