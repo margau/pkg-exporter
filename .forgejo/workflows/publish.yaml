@@ -12,7 +12,7 @@ jobs:
     name: "Build (and Publish)"
     runs-on: docker
     container:
-      image: codeberg.org/margau/buildenv-uv:latest@sha256:0f033ad58e16def28d8abb880e77fb055c033d4c93c517710a6205871ebd4d2a
+      image: codeberg.org/margau/buildenv-uv:latest@sha256:2ed33222bc6b7b2484d0a7dc34bf4fad2f30540830fb84611682db0fa27eb708
     
     steps:
       - uses: https://code.forgejo.org/actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
