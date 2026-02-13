@@ -1,8 +1,9 @@
 # Changes here will be overwritten by Copier.
-_commit: 0.0.186
+_commit: 0.0.198
 _src_path: https://codeberg.org/margau/copier-python-uv.git
 code_dir: src
 container: false
+forgejo_publish: true
 forgejo_url: https://codeberg.org/margau/pkg-exporter
 ignore_pylint: true
 ignore_ruff: false
