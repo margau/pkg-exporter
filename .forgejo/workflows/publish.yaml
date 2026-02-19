@@ -39,7 +39,7 @@ jobs:
         env:
           GITEA_REPO: "${{ forgejo.repository }}"
       - name: Upload release assets to Forgejo
-        uses: https://code.forgejo.org/actions/forgejo-release@6e3a26f82af465c93109eaf82c021493f5b36199 # v2.11.0
+        uses: https://code.forgejo.org/actions/forgejo-release@9ef8d3a17f0c09ca6864a337f748e9c038d1c820 # v2.11.1
         if: "${{ startsWith(github.ref, 'refs/tags') }}"
         with:
           direction: upload
