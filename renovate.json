@@ -50,7 +50,8 @@
       "matchUpdateTypes": [
         "patch"
       ],
-      "automerge": true
+      "automerge": true,
+      "automergeSchedule": "* 0-3 */2 * *"
     }
   ]
 }
