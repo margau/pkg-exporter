@@ -1,5 +1,5 @@
 # Changes here will be overwritten by Copier.
-_commit: 0.4.14
+_commit: 0.4.15
 _src_path: https://codeberg.org/margau/copier-python-uv.git
 code_dir: src
 container: false
