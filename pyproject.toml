@@ -30,13 +30,22 @@ Source = "https://codeberg.org/margau/pkg-exporter.git"
 [project.scripts]
 pkg-exporter = "pkg_exporter.textfile:main"
 
-
-# Dev Dependencies
-[tool.uv]
-dev-dependencies = [
-  "ruff",
-  "pylint",
+[dependency-groups]
+dev = [
+  "ruff>=0.15.13",
+  "pylint>=4.0.5",
+  "pytest>=9.0.3",
+  "coverage>=7.14.0",
 ]
+
+[tool.uv]
 cache-keys = [{ file = "pyproject.toml" }, { git = { commit = true, tags = true } }]
 
+<<<<<<< before updating
 # TODO: Dev/CI scripts for lint & co.
+=======
+[tool.coverage.run]
+source = ["src", "tests"]
+
+# TODO: Dev/CI scripts for lint & co.
+>>>>>>> after updating
