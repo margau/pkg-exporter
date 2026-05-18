@@ -41,11 +41,7 @@ dev = [
 [tool.uv]
 cache-keys = [{ file = "pyproject.toml" }, { git = { commit = true, tags = true } }]
 
-<<<<<<< before updating
-# TODO: Dev/CI scripts for lint & co.
-=======
 [tool.coverage.run]
 source = ["src", "tests"]
 
 # TODO: Dev/CI scripts for lint & co.
->>>>>>> after updating
