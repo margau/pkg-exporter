@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 
-from prometheus_client import CollectorRegistry, Gauge, write_to_textfile
-from pkg_exporter.pkgmanager import apt
-from pkg_exporter import reboot
 import os
+
+from prometheus_client import CollectorRegistry, Gauge, write_to_textfile
+
+from pkg_exporter import reboot
+from pkg_exporter.pkgmanager import apt
 
 
 def main():

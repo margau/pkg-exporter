@@ -1,7 +1,8 @@
 import os
+from pathlib import Path
+
 import apt
 import apt.progress
-from pathlib import Path
 
 
 class AptPkgManager:
@@ -25,7 +26,7 @@ class AptPkgManager:
         self.cache.open(None)
 
     def labelValues(self, origin):
-        labelValues = [
+        return [
             origin.archive,
             origin.component,
             origin.label,
@@ -33,7 +34,6 @@ class AptPkgManager:
             origin.site,
             origin.trusted,
         ]
-        return labelValues
 
     def getMetricDict(self):
         return self.metricDict
@@ -52,11 +52,10 @@ class AptPkgManager:
         return updateMetrics
 
     def getLabelNames(self):
-        labelNames = ["archive", "component", "label", "origin", "site", "trusted"]
-        return labelNames
+        return ["archive", "component", "label", "origin", "site", "trusted"]
 
     def query(self):
-        for package_name in self.cache.keys():
+        for package_name in self.cache:
             selected_package = self.cache[package_name]
             if not selected_package.is_installed:
                 continue
@@ -64,7 +63,7 @@ class AptPkgManager:
                 key = str(origin)
                 if key not in self.metricsByOrigin:
                     self.metricsByOrigin[key] = {}
-                    for k, _ in self.metricDict.items():
+                    for k in self.metricDict:
                         self.metricsByOrigin[key][k] = 0
 
                     self.metricsByOrigin[key]["label_values"] = self.labelValues(origin)
@@ -99,7 +98,7 @@ class AptPkgManager:
 
     def getMetricValue(self, name):
         metricValue = []
-        for _, value in self.metricsByOrigin.items():
+        for value in self.metricsByOrigin.values():
             v = {}
             v["label"] = value["label_values"]
             if name in value:

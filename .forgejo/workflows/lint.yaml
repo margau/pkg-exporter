@@ -30,11 +30,11 @@ jobs:
       - name: Install the project
         run: uv sync --locked --all-extras --dev
       - name: check with ruff
-        run: uv run ruff check src tests || exit 0 
+        run: uv run ruff check src tests 
       - name: format with ruff
-        run: uv run ruff format --check src tests || exit 0 
+        run: uv run ruff format --check src tests 
       - name: check with pylint
-        run: uv run pylint src tests || exit 0  # TODO: Check if there is a need for special pytest-related pylint rules
+        run: uv run pylint src tests  # TODO: Check if there is a need for special pytest-related pylint rules
       - name: Minimize uv cache
         run: uv cache prune
       - name: cache save

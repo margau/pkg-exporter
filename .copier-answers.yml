@@ -5,10 +5,10 @@ code_dir: src
 container: false
 forgejo_publish: true
 forgejo_url: https://codeberg.org/margau/pkg-exporter
-ignore_pylint: true
+ignore_pylint: false
 ignore_pytest: true
-ignore_ruff: true
-ignore_ruff_format: true
+ignore_ruff: false
+ignore_ruff_format: false
 project_description: This project provides an textfile-based exporter for apt-repositories
 project_name: pkg-exporter
 pypi_publish: true
