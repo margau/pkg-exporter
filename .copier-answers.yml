@@ -1,5 +1,5 @@
 # Changes here will be overwritten by Copier.
-_commit: 0.8.5
+_commit: 0.9.17
 _src_path: https://codeberg.org/margau/copier-python-uv.git
 code_dir: src
 container: false
@@ -7,8 +7,8 @@ forgejo_publish: true
 forgejo_url: https://codeberg.org/margau/pkg-exporter
 ignore_pylint: true
 ignore_pytest: true
-ignore_ruff: false
-ignore_ruff_format: false
+ignore_ruff: true
+ignore_ruff_format: true
 project_description: This project provides an textfile-based exporter for apt-repositories
 project_name: pkg-exporter
 pypi_publish: true
