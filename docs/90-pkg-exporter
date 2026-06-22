@@ -1,0 +1,9 @@
+# Apt hooks recommended for pkg-exporter
+
+# These hooks create files pre and post update, to compare the time difference inside the script
+APT::Update::Pre-Invoke {"touch /tmp/pkg-exporter-apt-update-pre"; };
+APT::Update::Post-Invoke {"touch /tmp/pkg-exporter-apt-update-post"; };
+
+# These hooks ensure the metrics are automatically updated when apt is run
+APT::Update::Post-Invoke-Success {"/usr/local/bin/pkg-exporter"};
+DPkg::Post-Invoke {"/usr/local/bin/pkg-exporter"};
