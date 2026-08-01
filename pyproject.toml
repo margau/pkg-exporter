@@ -60,6 +60,7 @@ ignore = [
     "TD002", # TODO: Remove later
     "TD003", # TODO: Remove later
     "ANN", # TODO: Remove later
+    "CPY", # TODO: Remove later
     "COM812",
 ]
 

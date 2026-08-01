@@ -13,7 +13,7 @@ jobs:
     env:
       UV_CACHE_DIR: /tmp/.uv-cache
     container:
-      image: codeberg.org/margau/buildenv-uv:latest@sha256:c5732f2bd412b4404cf01a78b8238eeae0d9ae62460ecc66647ec04dd669d5bf
+      image: codeberg.org/margau/buildenv-uv:latest@sha256:033981ffdc1885628c7ff37b244b2d4287e240f928063058cf3a8ead5716727a
 
     steps:
       - uses: https://code.forgejo.org/actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
