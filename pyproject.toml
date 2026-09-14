@@ -35,7 +35,7 @@ dev = [
   "ruff==0.16.7",
   "pylint==4.0.8",
   "pytest==9.1.1",
-  "coverage==7.16.0",
+  "coverage==7.16.1",
 ]
 
 [tool.uv]
