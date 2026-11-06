@@ -16,7 +16,7 @@ jobs:
     env:
       UV_CACHE_DIR: /tmp/.uv-cache
     container:
-      image: codeberg.org/margau/buildenv-uv:0.13.6@sha256:d111015fdf0aaf61b85aaf07b9e18d0d28fee99a0d4a80ee4a5375932e61f8bb
+      image: codeberg.org/margau/buildenv-uv:0.13.7@sha256:526d6355a6a4270bd7dacd51fba596bba1271c509459d2b8435ff104b0a63064
     
     steps:
       - uses: https://code.forgejo.org/actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -67,7 +67,7 @@ jobs:
     name: "Draft Release Notes"
     runs-on: docker
     container:
-      image: codeberg.org/margau/buildenv-uv:0.13.6@sha256:d111015fdf0aaf61b85aaf07b9e18d0d28fee99a0d4a80ee4a5375932e61f8bb
+      image: codeberg.org/margau/buildenv-uv:0.13.7@sha256:526d6355a6a4270bd7dacd51fba596bba1271c509459d2b8435ff104b0a63064
     
     steps:
       - uses: https://code.forgejo.org/actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
